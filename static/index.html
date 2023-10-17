@@ -1,17 +1,18 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-    <title>Our Funky HTML Page</title>
-    <meta name="description" content="Our first page">
-    <meta name="keywords" content="html tutorial template">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Document</title>
 </head>
 
 <body>
     <script src="https://unpkg.com/htmx.org@1.9.6"></script>
-    <!-- have a button POST a click via AJAX -->
     <button hx-post="/clicked" hx-swap="afterend">
-      Click Me
+        Click Me
     </button>
 </body>
 
