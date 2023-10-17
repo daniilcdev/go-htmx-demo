@@ -10,13 +10,27 @@ import (
 	"text/template"
 )
 
+type Film struct {
+	Title    string
+	Director string
+}
+
 func indexHandler(w http.ResponseWriter, r *http.Request) {
 	http.FileServer(http.Dir("./static")).ServeHTTP(w, r)
 }
 
 func postClicked(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("./static/clicked.html"))
-	tmpl.Execute(w, nil)
+
+	films := map[string][]Film{
+		"Films": {
+			{Title: "The Godfather", Director: "Francis Ford Coppola"},
+			{Title: "Blade Runner", Director: "Ridley Scott"},
+			{Title: "The Thing", Director: "John Carpenter"},
+		},
+	}
+
+	tmpl.Execute(w, films)
 }
 
 func main() {
