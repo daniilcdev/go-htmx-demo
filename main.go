@@ -2,12 +2,12 @@ package main
 
 import (
 	"fmt"
-	"io"
 	"log"
 	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
+	"text/template"
 )
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
@@ -15,12 +15,8 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func postClicked(w http.ResponseWriter, r *http.Request) {
-	div, e := os.ReadFile("./static/clicked.html")
-	if e != nil {
-		panic(e)
-	}
-
-	io.WriteString(w, string(div[:]))
+	tmpl := template.Must(template.ParseFiles("./static/clicked.html"))
+	tmpl.Execute(w, nil)
 }
 
 func main() {
