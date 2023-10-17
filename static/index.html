@@ -8,7 +8,11 @@
 </head>
 
 <body>
-    Content goes here.
+    <script src="https://unpkg.com/htmx.org@1.9.6"></script>
+    <!-- have a button POST a click via AJAX -->
+    <button hx-post="/clicked" hx-swap="afterend">
+      Click Me
+    </button>
 </body>
 
 </html>

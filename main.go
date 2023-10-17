@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"io"
+	"log"
 	"net/http"
 	"os"
 	"os/signal"
@@ -12,15 +14,23 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 	http.FileServer(http.Dir("./static")).ServeHTTP(w, r)
 }
 
+func postClicked(w http.ResponseWriter, r *http.Request) {
+	div, e := os.ReadFile("./static/clicked.html")
+	if e != nil {
+		panic(e)
+	}
+
+	io.WriteString(w, string(div[:]))
+}
+
 func main() {
 	handleSigTerms()
 
 	http.HandleFunc("/", indexHandler)
+	http.HandleFunc("/clicked", postClicked)
 
-	if err := http.ListenAndServe(":3000", nil); err != nil {
-		fmt.Println("http.ListenAndServe:", err)
-		os.Exit(1)
-	}
+	fmt.Println("Start listening...")
+	log.Fatal(http.ListenAndServe(":3000", nil))
 }
 
 func handleSigTerms() {
