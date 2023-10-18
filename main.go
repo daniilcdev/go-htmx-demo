@@ -32,10 +32,15 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 func addFilmHandler(w http.ResponseWriter, r *http.Request) {
 	title := r.PostFormValue("title")
 	director := r.PostFormValue("director")
-	htmlString := fmt.Sprintf("<li class='list-group-item bg-primary text-white'>%s - %s</li>", title, director)
-	tmpl, _ := template.New("t").Parse(htmlString)
 
-	tmpl.Execute(w, nil)
+	tmpl := template.Must(template.ParseFiles("./static/filmListElement.html"))
+
+	film := Film{
+		Title:    title,
+		Director: director,
+	}
+
+	tmpl.Execute(w, film)
 }
 
 func main() {
