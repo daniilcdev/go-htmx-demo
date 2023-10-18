@@ -10,11 +10,19 @@
 </head>
 
 <body>
-    <script src="https://unpkg.com/htmx.org@1.9.6"></script>
-
     <div class="row mt-4 g-4" id="parent-div">
+        <div class="col-8">
+            <h1 class="mb-4">Film list</h1>
+            <ul class="list-group fs-5 me-5">
+                {{range .Films}}
+                <li class="list-group-item bg-primary text-white">{{.Title}} - {{.Director}}</li>
+                {{end}}
+            </ul>
+        </div>
+
         <div class="col-4">
             <h1 class="mb-4">Add Film</h1>
+
             <form>
                 <div class="mb-2">
                     <label for="film-title">Title</label>
@@ -24,12 +32,10 @@
                     <label for="film-director">Director</label>
                     <input type="text" name="director" id="film-director" class="form-control" />
                 </div>
-                <button type="submit" class="btn btn-primary" hx-target="#parent-div" hx-post="/clicked"
-                    hx-swap="beforebegin">
-                    Click Me
+                <button type="submit" class="btn btn-primary">
+                    Submit
                 </button>
             </form>
-
         </div>
     </div>
 
