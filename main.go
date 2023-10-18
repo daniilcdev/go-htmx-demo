@@ -29,25 +29,20 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl.Execute(w, films)
 }
 
-func postClicked(w http.ResponseWriter, r *http.Request) {
-	tmpl := template.Must(template.ParseFiles("./static/clicked.html"))
+func addFilmHandler(w http.ResponseWriter, r *http.Request) {
+	title := r.PostFormValue("title")
+	director := r.PostFormValue("director")
+	htmlString := fmt.Sprintf("<li class='list-group-item bg-primary text-white'>%s - %s</li>", title, director)
+	tmpl, _ := template.New("t").Parse(htmlString)
 
-	films := map[string][]Film{
-		"Films": {
-			{Title: "The Godfather", Director: "Francis Ford Coppola"},
-			{Title: "Blade Runner", Director: "Ridley Scott"},
-			{Title: "The Thing", Director: "John Carpenter"},
-		},
-	}
-
-	tmpl.Execute(w, films)
+	tmpl.Execute(w, nil)
 }
 
 func main() {
 	handleSigTerms()
 
 	http.HandleFunc("/", indexHandler)
-	http.HandleFunc("/clicked", postClicked)
+	http.HandleFunc("/add-film/", addFilmHandler)
 
 	fmt.Println("Start listening...")
 	log.Fatal(http.ListenAndServe(":3000", nil))
