@@ -33,14 +33,14 @@ func addFilmHandler(w http.ResponseWriter, r *http.Request) {
 	title := r.PostFormValue("title")
 	director := r.PostFormValue("director")
 
-	tmpl := template.Must(template.ParseFiles("./static/filmListElement.html"))
+	tmpl := template.Must(template.ParseFiles("./static/index.html"))
 
 	film := Film{
 		Title:    title,
 		Director: director,
 	}
 
-	tmpl.Execute(w, film)
+	tmpl.ExecuteTemplate(w, "film-list-element", film)
 }
 
 func main() {
